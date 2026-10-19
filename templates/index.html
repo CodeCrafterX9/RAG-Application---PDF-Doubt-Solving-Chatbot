@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marginalia — Ask your PDFs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+          href="{{ url_for('static', filename='styles.css') }}"></head>
+<body>
+
+  <!-- Mobile top bar -->
+  <header class="mobile-bar">
+    <button class="icon-btn" id="drawerToggle" aria-label="Toggle document shelf">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5h16M2 10h16M2 15h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <span class="mobile-title">Marginalia</span>
+    <span class="mobile-count" id="mobileDocCount">0 docs</span>
+  </header>
+
+  <div class="app">
+
+    <!-- LEFT: The Shelf -->
+    <aside class="shelf" id="shelf">
+      <div class="shelf-header">
+        <h1 class="wordmark">Marginalia<span class="wordmark-dot">.</span></h1>
+        <p class="tagline">Ask questions, get answers with receipts.</p>
+      </div>
+
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload PDF files">
+        <input type="file" id="fileInput" accept="application/pdf" multiple hidden />
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" class="dropzone-icon">
+          <path d="M11 3v11M11 3l-4 4M11 3l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 15v2a2 2 0 002 2h10a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <p><strong>Drop PDFs here</strong> or click to browse</p>
+        <p class="dropzone-sub">You can add more than one at a time</p>
+      </div>
+
+      <div class="shelf-list-wrap">
+        <div class="shelf-list-label">
+          <span>On the shelf</span>
+          <span class="shelf-list-count" id="docCount">0</span>
+        </div>
+        <ul class="shelf-list" id="shelfList">
+          <!-- doc spines injected here -->
+        </ul>
+        <div class="shelf-empty" id="shelfEmpty">
+          <p>The shelf is empty.</p>
+          <p class="shelf-empty-sub">Add a PDF above to start asking it questions.</p>
+        </div>
+      </div>
+    </aside>
+    <div class="shelf-scrim" id="shelfScrim"></div>
+
+    <!-- RIGHT: Reading room (chat) -->
+    <main class="reading-room">
+
+      <div class="scope-bar" id="scopeBar">
+        <span class="scope-label">Asking:</span>
+        <div class="scope-chips" id="scopeChips">
+          <button class="chip chip-all active" data-scope="all">All documents</button>
+        </div>
+      </div>
+
+      <div class="conversation" id="conversation">
+        <div class="convo-empty" id="convoEmpty">
+          <div class="convo-empty-mark">?</div>
+          <h2>Nothing asked yet</h2>
+          <p>Once a document is on the shelf, ask it anything — you'll get an answer with the exact pages it came from.</p>
+        </div>
+      </div>
+
+      <form class="composer" id="composerForm">
+        <textarea
+          id="questionInput"
+          class="composer-input"
+          placeholder="Ask something about your documents…"
+          rows="1"
+          disabled
+        ></textarea>
+        <button type="submit" class="composer-send" id="sendBtn" disabled aria-label="Send question">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9h13M9 3l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+    </main>
+  </div>
+
+  <!-- Citation source drawer -->
+  <div class="source-drawer" id="sourceDrawer">
+    <div class="source-drawer-panel">
+      <div class="source-drawer-header">
+        <span id="sourceDrawerTitle">Source</span>
+        <button class="icon-btn" id="sourceDrawerClose" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="source-drawer-body" id="sourceDrawerBody"></div>
+    </div>
+  </div>
+  <div class="source-scrim" id="sourceScrim"></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>

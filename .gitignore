@@ -1,0 +1,7 @@
+node_modules/
+venv/
+/.pdf
+.env*
+*.duckdb
+*.db
+.env
